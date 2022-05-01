@@ -1,0 +1,44 @@
+service: serverless-dev-demo
+frameworkVersion: '3'
+
+custom:
+  tableName: 'rsp-demo-table-${sls:stage}'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - Fn::GetAtt: [ DemoTable, Arn ]
+  environment:
+    DEMO_TABLE: ${self:custom.tableName}
+
+functions:
+  api:
+    handler: handler.handler
+    events:
+      - httpApi: '*'
+
+resources:
+  Resources:
+    DemoTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: itemKey
+            AttributeType: S
+        KeySchema:
+          - AttributeName: itemKey
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:custom.tableName}
