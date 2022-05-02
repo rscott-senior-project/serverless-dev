@@ -1,6 +1,17 @@
 #!/bin/bash
 
-KEY=$1
-NAME=$2
+URL=$(jq .url secrets/endpoint | tr -d \")
+OP=$1
+KEY=$2
+NAME=$3
 
-curl https://nltlfq9zc0.execute-api.us-east-1.amazonaws.com/addItem  -X POST -H 'Content-Type: application/json' -d '{"itemKey": "'"$KEY"'", "name": "'"$NAME"'"}' 
+echo $URL"/addItem"
+
+if [ $OP == "-p" ]; then
+  curl $URL"/addItem"  -X POST -H 'Content-Type: application/json' -d '{"itemKey": "'"$KEY"'", "name": "'"$NAME"'"}' 
+fi
+
+if [ $OP == "-g" ]; then
+  curl $URL"/items"  -X GET -H 'Content-Type: application/json' -d '{"itemKey": "'"$KEY"'"}' 
+fi
+
