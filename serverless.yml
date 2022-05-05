@@ -3,6 +3,7 @@ frameworkVersion: '3'
 
 custom:
   tableName: 'rsp-demo-table-${sls:stage}'
+  bucketName: 'rsp-s3-event-trigger-${sls:stage}'
 
 provider:
   name: aws
@@ -28,6 +29,12 @@ functions:
     handler: handler.handler
     events:
       - httpApi: '*'
+  s3-trigger:
+    handler: s3-event.handler
+    events:
+      - s3:
+          bucket: ${self:custom.bucketName}
+          event: s3:ObjectCreated:*
 
 resources:
   Resources:
