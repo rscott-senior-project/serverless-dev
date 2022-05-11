@@ -124,7 +124,7 @@ Serverless can deploy a DynamoDB after it is properly defined in the `serverless
               Resource:
                 - Fn::GetAtt: [ DemoTable, Arn ]
       environment:
-        DEMO\_TABLE: ${self:custom.tableName}
+        DEMO_TABLE: ${self:custom.tableName}
 
     functions:
       api:
