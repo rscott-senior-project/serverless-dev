@@ -1,6 +1,9 @@
 AWS Developer Associate Content Series : Developing a Serverless Application
 ============================================================================
 
+
+<a href=https://rscott-aws-developer.atlassian.net/wiki/spaces/ADACS/pages/13729793/Developing+a+Serverless+Application>Link to original article</a>
+------------------------
 Created by Rob Scott, last modified on May 09, 2022
 
 This demonstration will set up AWS Lambda, a function-as-a-service compute, and attach a DynamoDB table. The requests will be routed through API Gateway, the API management service for AWS.
